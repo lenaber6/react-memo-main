@@ -6,6 +6,12 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 
+// Todo: 1) добавить новый режим игры, в котором она заканчивается после трех ошибок.
+// 2)продумать формат отображения счетчика ошибок. Реализован счетчик на игровом экране,
+// если включен упрощенный режим.
+// 3) Уточнено исходное техническое задание, оно соответствует новой версии приложения.
+// 4) Добавлена оценка времени работы в README-файл.
+
 // Константы, которые хранят в себе статусы игры, вынести в const
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -59,6 +65,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     minutes: 0,
   });
 
+  // По умолчанию по окончании игры статус - LOST, его можно поменять а leaderboard
+
   function finishGame(status = STATUS_LOST) {
     setGameEndDate(new Date());
     setStatus(status);
@@ -90,41 +98,52 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       return;
     }
     // Игровое поле после открытия кликнутой карты
+    // Берём все карты, мапим, сверяем id той карты, на которую кликнули и первой
     const nextCards = cards.map(card => {
+      // если id не равно - карту не переворачивать, вернуть
       if (card.id !== clickedCard.id) {
         return card;
       }
-
+      // иначе- открыть вторую карту
+      // после return стоит объект, у кот. несколько свойств, их мы пропускаем через ...card
       return {
+        // структуризация: все др. св-ва карт остались, поменялось только open
         ...card,
         open: true,
       };
     });
-
+    // Когда сказали, что карточка совпала и открыта, то переустанавливаем это в состояние
+    // А когда меняется состояние - происходит перерисовка
     setCards(nextCards);
-
+    // если все карточки открыты, то пользователь выиграл, open становится true
     const isPlayerWon = nextCards.every(card => card.open);
 
     // Победа - все карты на поле открыты
     if (isPlayerWon) {
       finishGame(STATUS_WON);
+      // return останавливает игру, если пользователь выиграл, дальше играть нет смысла
+      // всё, что ниже return, выполняться не будет.
       return;
     }
 
-    // Открытые карты на игровом поле
+    // Если не выиграли
+    // Открытые карты на игровом поле, filter фильтрует по условию, возвращает новый массив и проверяет card.open=true, то поместить в массив
     const openCards = nextCards.filter(card => card.open);
 
-    // Ищем открытые карты, у которых нет пары среди других открытых
+    // Ищем открытые карты, у которых нет пары среди других открытых. Вернуть открытые карты без пары.
     const openCardsWithoutPair = openCards.filter(card => {
+      // Сравниваем открытые карточки с открытыми картами
       const sameCards = openCards.filter(openCard => card.suit === openCard.suit && card.rank === openCard.rank);
-
+      // sameCards - открытые парные карточки
+      console.log(sameCards);
       if (sameCards.length < 2) {
+        // карточка без пары
         return true;
       }
-
+      // карта имеет пару
       return false;
     });
-
+    // если 2 карточки без пары - мы проиграли
     const playerLost = openCardsWithoutPair.length >= 2;
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
@@ -225,3 +244,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     </div>
   );
 }
+
+//  ф-ция для установки данных, чтобы они обновились: если карточка - в открытых,
+// setCards(cards.map(card => (openCardsWithoutPair.includes(card) ? { ...card, open: false } : card)));
