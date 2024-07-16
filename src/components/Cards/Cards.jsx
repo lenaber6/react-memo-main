@@ -48,7 +48,7 @@ function getTimerValue(startDate, endDate) {
  * pairsCount - сколько пар будет в игре
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
-export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
+export function Cards({ pairsCount = 3, previewSeconds = 10 }) {
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
   // Текущий статус игры
@@ -65,7 +65,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     minutes: 0,
   });
 
-  // По умолчанию по окончании игры статус - LOST, его можно поменять а leaderboard
+  // По умолчанию по окончании игры статус - LOST, его можно поменять на leaderboard
 
   function finishGame(status = STATUS_LOST) {
     setGameEndDate(new Date());
@@ -85,9 +85,11 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setStatus(STATUS_PREVIEW);
   }
 
+  // eslint-disable-next-line no-use-before-define
+  const [isEasyMode, setIsEasyMode] = useState(isEasyMode ? 3 : 1);
   /**
    * Обработка основного действия в игре - открытие карты.
-   * После открытия карты игра может пепереходит в следующие состояния
+   * После открытия карты игра может переходить в следующие состояния
    * - "Игрок выиграл", если на поле открыты все карты
    * - "Игрок проиграл", если на поле есть две открытые карты без пары
    * - "Игра продолжается", если не случилось первых двух условий
@@ -147,13 +149,21 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     const playerLost = openCardsWithoutPair.length >= 2;
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
-    if (playerLost) {
-      finishGame(STATUS_LOST);
-      return;
+    // if (playerLost) {
+    //   finishGame(STATUS_LOST);
+    //   return;
+    // }
+    if (isEasyMode === true) {
+      for (let i = 1; i <= 3; i++) {
+        if (playerLost) {
+          resetGame();
+        }
+      }
+      setIsEasyMode(finishGame(STATUS_LOST));
     }
-
-    // ... игра продолжается
   };
+
+  // ... игра продолжается
 
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
 
