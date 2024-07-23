@@ -3,6 +3,7 @@ import styles from "./SelectLevelPage.module.css";
 import Checkbox from "../../components/CheckBox/CheckBox";
 import { useState } from "react";
 import { Button } from "../../components/Button/Button";
+import cn from "classnames";
 
 const levels = [3, 6, 9];
 
@@ -19,7 +20,7 @@ export function SelectLevelPage() {
         <ul className={styles.levels}>
           {levels.map((level, index) => (
             <li
-              className={styles.level}
+              className={cn(styles.level, styles.levelLink)}
               key={level}
               onClick={() => {
                 setSelectedLevel(level);
@@ -51,11 +52,14 @@ export function SelectLevelPage() {
           name={"easy-mode"}
           label={"Включить легкий режим (игра до 3х ошибок)"}
           onClick={() => {
-            setIsEasyMode();
+            setIsEasyMode(prev => !prev);
           }}
         />
         <Link to={`/game/${selectedLevel}${easyRoute}`}>
           <Button>Начать игру</Button>
+        </Link>
+        <Link to="/leaderboard">
+          <div className={styles.leaderBoardLink}>Перейти к лидерборду</div>
         </Link>
       </div>
     </div>
