@@ -6,8 +6,7 @@ import deadImageUrl from "./images/dead.png";
 import celebrationImageUrl from "./images/celebration.png";
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick }) {
-  // const title = isWon ? "Вы победили!" : "Вы проиграли!";
-  const title = isWon ? "Вы победили!" : "Game over: <br/> Вы проиграли <br/> 3 раза подряд!";
+  const title = isWon ? "Вы победили!" : "Вы проиграли!";
 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
 
