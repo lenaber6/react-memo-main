@@ -8,6 +8,12 @@ import { Card } from "../../components/Card/Card";
 import { getTimerValue } from "../../utils/timer";
 import { STATUS_IN_PROGRESS, STATUS_LOST, STATUS_PREVIEW, STATUS_WON } from "../../const";
 import { useParams } from "react-router-dom";
+import alohomoraImg from "./images/alohomora1.png";
+import epiphanyImg from "./images/epiphany.png";
+import cn from "classnames";
+
+const alohomora = alohomoraImg;
+const epiphany = epiphanyImg;
 
 /**
  * Основной компонент игры, внутри него находится вся игровая механика и логика.
@@ -233,49 +239,64 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </div>
           ) : (
             <>
-              <div className={styles.timerValue}>
-                <div className={styles.timerDescription}>min</div>
-                <div>{timer.minutes.toString().padStart("2", "0")}</div>
+              <div className={styles.timer1}>
+                <div className={styles.timerValue}>
+                  <div className={styles.timerDescription}>min</div>
+                  <div>{timer.minutes.toString().padStart("2", "0")}</div>
+                </div>
+                .
+                <div className={styles.timerValue}>
+                  <div className={styles.timerDescription}>sec</div>
+                  <div>{timer.seconds.toString().padStart("2", "0")}</div>
+                </div>
               </div>
-              .
-              <div className={styles.timerValue}>
-                <div className={styles.timerDescription}>sec</div>
-                <div>{timer.seconds.toString().padStart("2", "0")}</div>
+              <div className={styles.alohomoraContent}>
+                <h2 className={styles.title}>Суперсилы:</h2>
+                <div className={styles.powers}>
+                  <div className={cn(styles.alohomoraBack, styles.notActive)}>
+                    <img className={styles.alohomoraImg} src={epiphany} alt="epiphany" />
+                  </div>
+                  <div className={styles.alohomoraText}>
+                    "Прозрение" - на 5 секунд показываются все карты. Таймер длительности игры на это время
+                    останавливается.
+                  </div>
+                  <div className={cn(styles.alohomoraBack, styles.notActive)}>
+                    <img className={styles.alohomoraImg} src={alohomora} alt="alohomora" />
+                  </div>
+                  <div className={styles.alohomoraText}>"Алохомора" - открывает случайную пару карт</div>
+                </div>
               </div>
+              {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
             </>
           )}
         </div>
-        {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
-      </div>
 
-      <div className={styles.cards}>
-        {cards.map(card => (
-          <Card
-            key={card.id}
-            onClick={() => openCard(card)}
-            open={status !== STATUS_IN_PROGRESS ? true : card.open}
-            suit={card.suit}
-            rank={card.rank}
-          />
-        ))}
-      </div>
-      {mode === "easy-mode" ? <div className={styles.mistakes}>Осталось {mistakes} ошибки</div> : ""}
-      {/* <div className={styles.mistakes}>Осталось {mistakes} ошибки</div> */}
-
-      {isGameEnded ? (
-        <div className={styles.modalContainer}>
-          <EndGameModal
-            isWon={status === STATUS_WON}
-            gameDurationSeconds={timer.seconds}
-            gameDurationMinutes={timer.minutes}
-            onClick={resetGame}
-          />
+        <div className={styles.cards}>
+          {cards.map(card => (
+            <Card
+              key={card.id}
+              onClick={() => openCard(card)}
+              open={status !== STATUS_IN_PROGRESS ? true : card.open}
+              suit={card.suit}
+              rank={card.rank}
+            />
+          ))}
         </div>
-      ) : null}
-      {/* {setIsEasyMode && <div className={styles.mistakes}>Осталось 3 ошибки</div>} */}
+        {mode === "easy-mode" ? <div className={styles.mistakes}>Осталось {mistakes} ошибки</div> : ""}
+        {/* <div className={styles.mistakes}>Осталось {mistakes} ошибки</div> */}
+
+        {isGameEnded ? (
+          <div className={styles.modalContainer}>
+            <EndGameModal
+              isWon={status === STATUS_WON}
+              gameDurationSeconds={timer.seconds}
+              gameDurationMinutes={timer.minutes}
+              onClick={resetGame}
+            />
+          </div>
+        ) : null}
+        {/* {setIsEasyMode && <div className={styles.mistakes}>Осталось 3 ошибки</div>} */}
+      </div>
     </div>
   );
 }
-
-//  ф-ция для установки данных, чтобы они обновились: если карточка - в открытых,
-// setCards(cards.map(card => (openCardsWithoutPair.includes(card) ? { ...card, open: false } : card)))

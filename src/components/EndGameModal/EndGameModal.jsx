@@ -61,13 +61,18 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       {isLeader ? (
         <div className={styles.userblock}>
           <input id="name-input" type="text" className={styles.input} placeholder="Пользователь" />
-          <img onClick={sumbitPostLeader} className={styles.submitImg} src={submitImg} alt="Отправить имя" />
+          <img
+            onClick={sumbitPostLeader}
+            className={styles.submitImg}
+            src={submitImg}
+            alt="Отправить имя пользователя"
+          />
         </div>
       ) : null}
       <p className={styles.description}>Затраченное время:</p>
       <div className={styles.time}>{time}</div>
 
-      <Button onClick={onClick}>Начать сначала</Button>
+      <Button onClick={onClick}>Играть снова</Button>
       <Link to="/leaderboard">
         <div className={styles.leaderBoardLink}>Перейти к лидерборду</div>
       </Link>

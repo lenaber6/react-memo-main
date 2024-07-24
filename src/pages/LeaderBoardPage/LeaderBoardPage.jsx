@@ -76,13 +76,13 @@ export function LeaderBoardPage() {
                     <img className={styles.hardImg} src={hardGray} alt="not hard played" />
                     <div className={styles.clueText}>
                       Игра пройдена
-                      <br /> в сложном режиме
+                      <br /> в лёгком режиме
                     </div>
                   </div>
                 )}
                 {superPlayed(list) ? (
                   <div className={styles.achievementsContent}>
-                    <img className={styles.achievementImg} src={superGray} alt="with super played" />
+                    <img className={styles.achievementImg} src={superColor} alt="with super played" />
                     <div className={styles.clueText}>
                       Игра пройдена
                       <br /> без супер-сил
@@ -90,9 +90,9 @@ export function LeaderBoardPage() {
                   </div>
                 ) : (
                   <div className={styles.achievementsContent}>
-                    <img className={styles.achievementImg} src={superColor} alt="without super played" />
+                    <img className={styles.achievementImg} src={superGray} alt="without super played" />
                     <div className={styles.clueText}>
-                      Игра пройдена <br /> без супер-сил
+                      Игра пройдена <br /> c супер-силами
                     </div>
                   </div>
                 )}
