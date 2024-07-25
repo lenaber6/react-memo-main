@@ -125,7 +125,7 @@
   display: none;
 }
 
-.superPowersContainer:hover .alohomoraText {
+.superPowersContainer :hover .alohomoraText {
   display: block;
   position: absolute;
   z-index: 100;
