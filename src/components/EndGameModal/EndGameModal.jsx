@@ -18,10 +18,11 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const isLeader = isWon && Number(pairsCount) === hardLevelPairsNumber;
 
   const hardPlayed = isLeader && isEasyMode === false;
+  // const hardPlayed = isWon && isEasyMode === false;
 
-  const title = isLeader ? "Вы попали в лидерборд!" : isWon ? "Вы выйграли" : "Вы проиграли!";
+  const title = isWon ? "Вы попали в лидерборд!" : isWon ? "Вы выйграли" : "Вы проиграли!";
 
-  // const title = isWon ? "Вы победили!" : "Вы проиграли!";
+  // const title = isWon ? "Вы победили! Вы попали в лидерборд!" : "Вы проиграли!";
 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
 

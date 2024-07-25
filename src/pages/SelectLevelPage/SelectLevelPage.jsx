@@ -4,11 +4,13 @@ import Checkbox from "../../components/CheckBox/CheckBox";
 import { useState } from "react";
 import { Button } from "../../components/Button/Button";
 import cn from "classnames";
+import { useCheckbox } from "../../hooks/useCheckbox";
 
 const levels = [3, 6, 9];
 
 export function SelectLevelPage() {
-  const [isEasyMode, setIsEasyMode] = useState(false);
+  const { isEasyMode, setIsEasyMode } = useCheckbox();
+  console.log();
   const [selectedLevel, setSelectedLevel] = useState(3);
 
   const easyRoute = isEasyMode ? "/easy-mode" : "";

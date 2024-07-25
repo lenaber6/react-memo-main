@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import alohomoraImg from "./images/alohomora1.png";
 import epiphanyImg from "./images/epiphany.png";
 import cn from "classnames";
-// import { useCheckbox } from "../../hooks/useCheckbox";
+import { useCheckbox } from "../../hooks/useCheckbox";
 
 const alohomora = alohomoraImg;
 const epiphany = epiphanyImg;
@@ -24,7 +24,7 @@ const epiphany = epiphanyImg;
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const { mode } = useParams();
   console.log(mode);
-  // const { isEasyMode } = useCheckbox();
+  const { isEasyMode } = useCheckbox();
 
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
@@ -42,6 +42,12 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   function useEpiphany() {
     const currentTime = timer;
     setStatus(STATUS_PAUSED);
+    setTimeout(() => {
+      if (gameEndDate !== null) {
+        const newEndDate = new Date(gameEndDate.getTime() - 5000);
+        setTimer(getTimerValue(gameStartDate, newEndDate));
+      }
+    });
     setIsEpiphanyAvailable(false);
     const closedCards = cards.filter(card => !card.open);
 
@@ -273,13 +279,16 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
   // Обновляем значение таймера в интервале
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTimer(getTimerValue(gameStartDate, gameEndDate));
-    }, 300);
+    let intervalId = null;
+    if (status !== STATUS_PAUSED && gameStartDate && !gameEndDate) {
+      intervalId = setInterval(() => {
+        setTimer(getTimerValue(gameStartDate, gameEndDate));
+      }, 300);
+    }
     return () => {
       clearInterval(intervalId);
     };
-  }, [gameStartDate, gameEndDate]);
+  }, [status, gameStartDate, gameEndDate]);
 
   return (
     <div className={styles.container}>
@@ -347,7 +356,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             />
           ))}
         </div>
-        {mode === "easy-mode" ? <div className={styles.mistakes}>Осталось {mistakes} ошибки</div> : ""}
+        {isEasyMode ? <div className={styles.mistakes}>Осталось {mistakes} ошибки</div> : ""}
         {/* <div className={styles.mistakes}>Осталось {mistakes} ошибки</div> */}
 
         {isGameEnded ? (
