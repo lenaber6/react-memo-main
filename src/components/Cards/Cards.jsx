@@ -6,11 +6,12 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { getTimerValue } from "../../utils/timer";
-import { STATUS_IN_PROGRESS, STATUS_LOST, STATUS_PREVIEW, STATUS_WON } from "../../const";
+import { STATUS_IN_PROGRESS, STATUS_LOST, STATUS_PAUSED, STATUS_PREVIEW, STATUS_WON } from "../../const";
 import { useParams } from "react-router-dom";
 import alohomoraImg from "./images/alohomora1.png";
 import epiphanyImg from "./images/epiphany.png";
 import cn from "classnames";
+// import { useCheckbox } from "../../hooks/useCheckbox";
 
 const alohomora = alohomoraImg;
 const epiphany = epiphanyImg;
@@ -23,11 +24,60 @@ const epiphany = epiphanyImg;
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const { mode } = useParams();
   console.log(mode);
+  // const { isEasyMode } = useCheckbox();
 
-  const [mistakes, setMistakes] = useState(3);
-  const [areCardsOpened, setAreCardsOpened] = useState(false);
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
   const [cards, setCards] = useState([]);
+
+  // Игра в лёгком режиме до 3х ошибок
+  const [mistakes, setMistakes] = useState(3);
+  const [areCardsOpened, setAreCardsOpened] = useState(false);
+
+  // Суперсилы: Прозрение- на 5 сек открыть все карты, Алахомора- открыть 2 одинаковые карты
+  const [usedAlohomora, setUsedAlohomora] = useState(false);
+  const [usedOnce, setUsedOnce] = useState(false);
+  const [lastCard, setLastCard] = useState(false);
+  const [isEpiphanyAvailable, setIsEpiphanyAvailable] = useState(true);
+
+  function useEpiphany() {
+    const currentTime = timer;
+    setStatus(STATUS_PAUSED);
+    setIsEpiphanyAvailable(false);
+    const closedCards = cards.filter(card => !card.open);
+
+    cards.map(card => (card.open = true));
+
+    setTimeout(() => {
+      setCards(
+        cards.map(card => {
+          if (closedCards.includes(card)) {
+            return { ...card, open: false };
+          } else {
+            return card;
+          }
+        }),
+      );
+      setTimer(currentTime);
+      setStatus(STATUS_IN_PROGRESS);
+    }, 5000);
+  }
+
+  function useAlohomora() {
+    setUsedAlohomora(true);
+  }
+  useEffect(() => {
+    if (usedAlohomora && !usedOnce) {
+      const notOpenedCards = cards.filter(card => !card.open);
+      const randomCard = notOpenedCards[Math.floor(Math.random() * notOpenedCards.length)];
+      const randomPair = notOpenedCards.filter(
+        sameCards => randomCard.suit === sameCards.suit && randomCard.rank === sameCards.rank,
+      );
+      randomPair[1].open = true;
+      randomPair[0].open = true;
+      setUsedOnce(true);
+    }
+  }, [cards, usedAlohomora, usedOnce]);
+
   // Текущий статус игры
   const [status, setStatus] = useState(STATUS_PREVIEW);
 
@@ -54,8 +104,12 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameStartDate(startDate);
     setTimer(getTimerValue(startDate, null));
     setStatus(STATUS_IN_PROGRESS);
+    setIsEpiphanyAvailable(true);
   }
   function resetGame() {
+    setLastCard(false);
+    setUsedAlohomora(false);
+    setUsedOnce(false);
     setGameStartDate(null);
     setGameEndDate(null);
     setTimer(getTimerValue(null, null));
@@ -119,7 +173,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       setMistakes(3);
       return;
     }
-
     setMistakes(prev => prev - 1);
   };
 
@@ -250,23 +303,35 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                   <div>{timer.seconds.toString().padStart("2", "0")}</div>
                 </div>
               </div>
-              <div className={styles.alohomoraContent}>
-                <h2 className={styles.title}>Суперсилы:</h2>
-                <div className={styles.powers}>
-                  <div className={cn(styles.alohomoraBack, styles.notActive)}>
-                    <img className={styles.alohomoraImg} src={epiphany} alt="epiphany" />
+
+              {status === STATUS_IN_PROGRESS || status === STATUS_PAUSED ? (
+                <div className={styles.superPowersContainer}>
+                  <h2 className={styles.title}>Суперсилы:</h2>
+                  <div className={styles.powers}>
+                    <div
+                      onClick={useEpiphany}
+                      className={isEpiphanyAvailable ? styles.alohomoraBack : styles.notActive}
+                    >
+                      <img className={styles.alohomoraImg} src={epiphany} alt="epiphany" />
+                    </div>
+                    <div className={styles.alohomoraText}>
+                      "Прозрение" - на 5 секунд показываются все карты. Таймер длительности игры на это время
+                      останавливается.
+                    </div>
+                    <div
+                      onClick={useAlohomora}
+                      className={cn(styles.alohomoraBack, { [styles.notActive]: usedAlohomora || lastCard })}
+                    >
+                      <img className={styles.alohomoraImg} src={alohomora} alt="alohomora" />
+                    </div>
+                    <div className={styles.alohomoraText}>"Алохомора" - открывает случайную пару карт</div>
                   </div>
-                  <div className={styles.alohomoraText}>
-                    "Прозрение" - на 5 секунд показываются все карты. Таймер длительности игры на это время
-                    останавливается.
-                  </div>
-                  <div className={cn(styles.alohomoraBack, styles.notActive)}>
-                    <img className={styles.alohomoraImg} src={alohomora} alt="alohomora" />
-                  </div>
-                  <div className={styles.alohomoraText}>"Алохомора" - открывает случайную пару карт</div>
                 </div>
-              </div>
-              {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
+              ) : null}
+
+              {status === STATUS_IN_PROGRESS || status === STATUS_PAUSED ? (
+                <Button onClick={resetGame}>Начать заново</Button>
+              ) : null}
             </>
           )}
         </div>
@@ -288,6 +353,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         {isGameEnded ? (
           <div className={styles.modalContainer}>
             <EndGameModal
+              usedOnce={usedOnce}
               isWon={status === STATUS_WON}
               gameDurationSeconds={timer.seconds}
               gameDurationMinutes={timer.minutes}

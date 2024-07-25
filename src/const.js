@@ -10,3 +10,4 @@ export const STATUS_WON = "STATUS_WON";
 export const STATUS_IN_PROGRESS = "STATUS_IN_PROGRESS";
 // Начало игры: игрок видит все карты в течении нескольких секунд
 export const STATUS_PREVIEW = "STATUS_PREVIEW";
+export const STATUS_PAUSED = "STATUS_PAUSED";
