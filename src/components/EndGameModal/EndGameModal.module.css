@@ -1,6 +1,8 @@
 .modal {
+  /* width: 480px;
+  height: 459px; */
   width: 480px;
-  height: 459px;
+  height: 634px;
   border-radius: 12px;
   background: #c2f5ff;
   display: flex;
@@ -18,19 +20,19 @@
 .title {
   color: #004980;
   font-variant-numeric: lining-nums proportional-nums;
-  font-family: StratosSkyeng;
+  font-family: "StratosSkyeng";
   font-size: 40px;
   font-style: normal;
   font-weight: 400;
   line-height: 48px;
-
+  padding-left: 45px;
   margin-bottom: 28px;
 }
 
 .description {
   color: #000;
   font-variant-numeric: lining-nums proportional-nums;
-  font-family: StratosSkyeng;
+  font-family: "StratosSkyeng";
   font-size: 24px;
   font-style: normal;
   font-weight: 400;
@@ -41,11 +43,53 @@
 
 .time {
   color: #000;
-  font-family: StratosSkyeng;
+  font-family: "StratosSkyeng";
   font-size: 64px;
   font-style: normal;
   font-weight: 400;
   line-height: 72px;
 
   margin-bottom: 40px;
+}
+.leaderBoardLink {
+  color: #004980;
+  font-family:"StratosSkyeng";
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 32px;
+  padding-bottom: 18px;
+  margin-top: 10px;
+}
+.input {
+  padding-top: 8px;
+  width: 216px;
+  height: 41px;
+  border-radius: 10px;
+  border: none;
+  opacity: 0px;
+  background: #ffffff;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.input::-webkit-input-placeholder {
+  font-family: "Roboto";
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: center;
+  color: #999999;
+}
+.submitImg {
+  width: 40px;
+  height: 40px;
+  padding-bottom: 10px;
+}
+
+.userblock {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 16px;
+  
 }

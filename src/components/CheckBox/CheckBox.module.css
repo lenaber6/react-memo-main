@@ -21,8 +21,8 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 50% 50%;
-    border-color: #fff;
-    background-color: #fff;
+    border-color: black;
+    background-color: red;
   }
   
   .input:checked + label::before {
