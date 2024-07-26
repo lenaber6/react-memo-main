@@ -3,7 +3,7 @@ import styles from "./SelectLevelPage.module.css";
 import Checkbox from "../../components/CheckBox/CheckBox";
 import { useState } from "react";
 import { Button } from "../../components/Button/Button";
-import cn from "classnames";
+// import cn from "classnames";
 import { useCheckbox } from "../../hooks/useCheckbox";
 
 const levels = [3, 6, 9];
@@ -12,6 +12,7 @@ export function SelectLevelPage() {
   const { isEasyMode, setIsEasyMode } = useCheckbox();
   console.log();
   const [selectedLevel, setSelectedLevel] = useState(3);
+  const [choosenLevel, setChoosenLevel] = useState(null);
 
   const easyRoute = isEasyMode ? "/easy-mode" : "";
 
@@ -22,10 +23,13 @@ export function SelectLevelPage() {
         <ul className={styles.levels}>
           {levels.map((level, index) => (
             <li
-              className={cn(styles.level, styles.levelLink)}
+              className={
+                choosenLevel === 3 || choosenLevel === 6 || choosenLevel === 9 ? styles.choosenLevel : styles.level
+              }
               key={level}
               onClick={() => {
                 setSelectedLevel(level);
+                setChoosenLevel();
               }}
             >
               {index + 1}

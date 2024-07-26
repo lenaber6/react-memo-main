@@ -4,25 +4,25 @@ import { Button } from "../Button/Button";
 
 import deadImageUrl from "./images/dead.png";
 import celebrationImageUrl from "./images/celebration.png";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCheckbox } from "../../hooks/useCheckbox";
 import submitImageUrl from "./images/submit.png";
 import { postLeader } from "../../api/api";
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, usedOnce }) {
-  const { pairsCount } = useParams();
+  // const { pairsCount } = useParams();
   const { isEasyMode } = useCheckbox();
 
-  const hardLevelPairsNumber = 9;
+  // const hardLevelPairsNumber = 9;
 
-  const isLeader = isWon && Number(pairsCount) === hardLevelPairsNumber;
+  // const isLeader = isWon && Number(pairsCount) === hardLevelPairsNumber;
 
-  const hardPlayed = isLeader && isEasyMode === false;
-  // const hardPlayed = isWon && isEasyMode === false;
+  // const hardPlayed = isLeader && isEasyMode === false;
+  const hardPlayed = isWon && isEasyMode === false;
 
-  const title = isWon ? "Вы попали в лидерборд!" : isWon ? "Вы выйграли" : "Вы проиграли!";
+  // const title = isWon ? "Вы попали в лидерборд!" : isWon ? "Вы выйграли" : "Вы проиграли!";
 
-  // const title = isWon ? "Вы победили! Вы попали в лидерборд!" : "Вы проиграли!";
+  const title = isWon ? "Вы победили! Вы попали в лидерборд!" : "Вы проиграли!";
 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
 
@@ -59,7 +59,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
     <div className={styles.modal}>
       <img className={styles.image} src={imgSrc} alt={imgAlt} />
       <h2 className={styles.title}>{title}</h2>
-      {isLeader ? (
+      {isWon ? (
         <div className={styles.userblock}>
           <input id="name-input" type="text" className={styles.input} placeholder="Пользователь" />
           <img
