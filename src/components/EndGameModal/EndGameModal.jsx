@@ -62,12 +62,14 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       {isWon ? (
         <div className={styles.userblock}>
           <input id="name-input" type="text" className={styles.input} placeholder="Пользователь" />
-          <img
-            onClick={sumbitPostLeader}
-            className={styles.submitImg}
-            src={submitImg}
-            alt="Отправить имя пользователя"
-          />
+          <Link to="/leaderboard">
+            <img
+              onClick={sumbitPostLeader}
+              className={styles.submitImg}
+              src={submitImg}
+              alt="Отправить имя пользователя"
+            />
+          </Link>
         </div>
       ) : null}
       <p className={styles.description}>Затраченное время:</p>
