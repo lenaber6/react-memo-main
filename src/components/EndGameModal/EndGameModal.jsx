@@ -10,17 +10,9 @@ import submitImageUrl from "./images/submit.png";
 import { postLeader } from "../../api/api";
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, usedOnce }) {
-  // const { pairsCount } = useParams();
   const { isEasyMode } = useCheckbox();
 
-  // const hardLevelPairsNumber = 9;
-
-  // const isLeader = isWon && Number(pairsCount) === hardLevelPairsNumber;
-
-  // const hardPlayed = isLeader && isEasyMode === false;
   const hardPlayed = isWon && isEasyMode === false;
-
-  // const title = isWon ? "Вы попали в лидерборд!" : isWon ? "Вы выйграли" : "Вы проиграли!";
 
   const title = isWon ? "Вы победили! Вы попали в лидерборд!" : "Вы проиграли!";
 
