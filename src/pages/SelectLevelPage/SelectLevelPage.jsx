@@ -36,6 +36,7 @@ export function SelectLevelPage() {
           label={"Включить легкий режим (игра до 3х ошибок)"}
           onClick={() => {
             setIsEasyMode(prev => !prev);
+            localStorage.setItem("easy-mode");
           }}
         />
         <Link to={`/game/${selectedLevel}${easyRoute}`}>

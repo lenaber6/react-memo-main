@@ -73,7 +73,7 @@ export function LeaderBoardPage() {
                   </div>
                 ) : (
                   <div className={styles.achievementsContent}>
-                    <img className={styles.hardImg} src={hardGray} alt="not hard played" />
+                    <img className={styles.hardImg} src={hardGray} alt="easy played" />
                     <div className={styles.clueText}>
                       Игра пройдена
                       <br /> в лёгком режиме

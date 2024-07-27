@@ -8,13 +8,14 @@ import { Link } from "react-router-dom";
 import { useCheckbox } from "../../hooks/useCheckbox";
 import submitImageUrl from "./images/submit.png";
 import { postLeader } from "../../api/api";
+import { useEffect, useState } from "react";
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, usedOnce }) {
   const { isEasyMode } = useCheckbox();
 
   const hardPlayed = isWon && isEasyMode === false;
 
-  const title = isWon ? "Вы победили! Вы попали в лидерборд!" : "Вы проиграли!";
+  const title = isWon ? "Вы попали в лидерборд!" : "Вы проиграли!";
 
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl;
 
@@ -22,12 +23,18 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
 
   const submitImg = submitImageUrl;
 
-  const nameInputElement = document.getElementById("name-input");
+  // const nameInputElement = document.getElementById("name-input");
+  const [nameInputElement, setNameInputElement] = useState("");
+
+  useEffect(newLeader => {
+    setNameInputElement(newLeader);
+  }, []);
 
   let achievements = [];
 
   if (hardPlayed) {
     achievements.unshift(1);
+    console.log(achievements, achievements.length, "Hi");
   }
 
   if (usedOnce === true) {
