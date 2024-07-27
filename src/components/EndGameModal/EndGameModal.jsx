@@ -8,12 +8,10 @@ import { Link } from "react-router-dom";
 import { useCheckbox } from "../../hooks/useCheckbox";
 import submitImageUrl from "./images/submit.png";
 import { postLeader } from "../../api/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, usedOnce }) {
   const { isEasyMode } = useCheckbox();
-
-  const hardPlayed = isWon && isEasyMode === false;
 
   const title = isWon ? "Вы попали в лидерборд!" : "Вы проиграли!";
 
@@ -24,22 +22,19 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   const submitImg = submitImageUrl;
 
   // const nameInputElement = document.getElementById("name-input");
-  const [nameInputElement, setNameInputElement] = useState("");
+  const [nameInputElement, setNameInputElement] = useState({ name: "" });
 
-  useEffect(newLeader => {
-    setNameInputElement(newLeader);
-  }, []);
+  const handleNameInputChange = e => {
+    const { name, value } = e.target;
+    setNameInputElement({
+      ...nameInputElement,
+      [name]: value,
+    });
+  };
 
-  let achievements = [];
-
-  if (hardPlayed) {
-    achievements.unshift(1);
-    console.log(achievements, achievements.length, "Hi");
-  }
-
-  if (usedOnce === true) {
-    achievements.push(2);
-  }
+  // useEffect(newLeader => {
+  //   setNameInputElement(newLeader);
+  // }, []);
 
   const time = `${gameDurationMinutes.toString().padStart("2", "0")}.${gameDurationSeconds
     .toString()
@@ -47,11 +42,23 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
 
   const sumbitPostLeader = () => {
     const timeToBoard = gameDurationMinutes * 60 + gameDurationSeconds;
+    let achievements = [];
+    const hardPlayed = isWon && isEasyMode === false;
+
     postLeader({
       nameInputElement,
       time: timeToBoard,
       achievements: achievements,
     });
+    achievements.filter(achiv => (achiv = hardPlayed));
+
+    // if (hardPlayed) {
+    //   achievements.unshift(1);
+    //   console.log(achievements, achievements.length, "Hi");
+    // }
+    if (usedOnce === true) {
+      achievements.push(2);
+    }
   };
 
   return (
@@ -60,7 +67,15 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       <h2 className={styles.title}>{title}</h2>
       {isWon ? (
         <div className={styles.userblock}>
-          <input id="name-input" type="text" className={styles.input} placeholder="Пользователь" />
+          <input
+            id="name-input"
+            type="text"
+            name="name"
+            value={nameInputElement.name}
+            onChange={handleNameInputChange}
+            className={styles.input}
+            placeholder="Пользователь"
+          />
           <Link to="/leaderboard">
             <img
               onClick={sumbitPostLeader}

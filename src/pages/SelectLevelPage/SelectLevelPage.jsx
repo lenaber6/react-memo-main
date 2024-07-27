@@ -9,7 +9,7 @@ const levels = [3, 6, 9];
 
 export function SelectLevelPage() {
   const { isEasyMode, setIsEasyMode } = useCheckbox();
-  console.log();
+  console.log(isEasyMode, "isEasyMode");
   const [selectedLevel, setSelectedLevel] = useState(3);
   const easyRoute = isEasyMode ? "/easy-mode" : "";
 
@@ -36,7 +36,7 @@ export function SelectLevelPage() {
           label={"Включить легкий режим (игра до 3х ошибок)"}
           onClick={() => {
             setIsEasyMode(prev => !prev);
-            localStorage.setItem("easy-mode");
+            localStorage.setItem("easy-mode", "hard-mode");
           }}
         />
         <Link to={`/game/${selectedLevel}${easyRoute}`}>

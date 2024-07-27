@@ -17,7 +17,7 @@ export async function postLeader({ nameInputElement, time, achievements }) {
   const response = await fetch(host, {
     method: "POST",
     body: JSON.stringify({
-      name: nameInputElement,
+      name: nameInputElement.name,
       time: time,
       achievements: achievements,
     }),

@@ -36,7 +36,7 @@ export function LeaderBoardPage() {
       return true;
     }
   }
-
+  console.log(hardPlayed());
   function superPlayed(list) {
     if (list.achievements.includes(2)) {
       return true;
@@ -82,7 +82,7 @@ export function LeaderBoardPage() {
                 )}
                 {superPlayed(list) ? (
                   <div className={styles.achievementsContent}>
-                    <img className={styles.achievementImg} src={superColor} alt="with super played" />
+                    <img className={styles.achievementImg} src={superColor} alt="without superpower" />
                     <div className={styles.clueText}>
                       Игра пройдена
                       <br /> без супер-сил
@@ -90,7 +90,7 @@ export function LeaderBoardPage() {
                   </div>
                 ) : (
                   <div className={styles.achievementsContent}>
-                    <img className={styles.achievementImg} src={superGray} alt="without super played" />
+                    <img className={styles.achievementImg} src={superGray} alt="with superpower" />
                     <div className={styles.clueText}>
                       Игра пройдена <br /> c супер-силами
                     </div>

@@ -22,7 +22,7 @@ const epiphany = epiphanyImg;
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const { mode } = useParams();
-  console.log(mode);
+  // console.log(mode);
   const { isEasyMode } = useCheckbox();
 
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
