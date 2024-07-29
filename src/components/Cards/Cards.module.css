@@ -87,7 +87,7 @@
 .superPowersContainer {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 18px;
   align-items: center;
 }
 .title {
@@ -100,7 +100,15 @@
 }
 .powers {
   display: flex;
-  gap: 20px;
+  /* flex-direction: row;
+  justify-content: space-between; */
+  /* gap: 20px; */
+}
+.superPowers {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  gap: 30px;
 }
 .alohomoraBack {
   width: 68px;
@@ -124,20 +132,44 @@
 .alohomoraText {
   display: none;
 }
+.epiphanyText {
+  display: none;
+}
 
-.superPowersContainer :hover .alohomoraText {
+.superPowers :hover .alohomoraText {
   display: block;
   position: absolute;
   z-index: 100;
   min-height: 60px;
-  top: 120px;
+  top: 150px;
   width: 200px;
+  border: 5px solid #7ac100;
   border-radius: 12px;
   opacity: 0px;
   background: #c2f5ff;
   color: #004980;
   text-align: center;
-  padding-top: 20px;
+  padding: 20px;
+  font-family: "Inter";
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+}
+.superPowers :hover .epiphanyText {
+  display: block;
+  position: absolute;
+  z-index: 100;
+  min-height: 60px;
+  top: 140px;
+  left: 600px;
+  width: 200px;
+  border-radius: 12px;
+  border: 5px solid #7ac100;
+  opacity: 0px;
+  background: #c2f5ff;
+  color: #004980;
+  text-align: center;
+  padding: 20px;
   font-family: "Inter";
   font-size: 18px;
   font-weight: 400;

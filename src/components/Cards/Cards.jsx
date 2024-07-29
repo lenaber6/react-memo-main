@@ -317,26 +317,30 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
               {status === STATUS_IN_PROGRESS || status === STATUS_PAUSED ? (
                 <div className={styles.superPowersContainer}>
                   <h2 className={styles.title}>Суперсилы:</h2>
-                  <div className={styles.powers}>
-                    <div
-                      onClick={useEpiphany}
-                      className={isEpiphanyAvailable ? styles.alohomoraBack : styles.notActive}
-                    >
-                      <img className={styles.alohomoraImg} src={epiphany} alt="epiphany" />
+                  <div className={styles.superPowers}>
+                    <div className={styles.powers}>
+                      <div
+                        onClick={useEpiphany}
+                        className={isEpiphanyAvailable ? styles.alohomoraBack : styles.notActive}
+                      >
+                        <img className={styles.alohomoraImg} src={epiphany} alt="epiphany" />
+                      </div>
+                      <div className={styles.epiphanyText}>
+                        "Прозрение" - на 5 секунд показываются все карты. Таймер длительности игры на это время
+                        останавливается.
+                      </div>
                     </div>
-                    <div className={styles.alohomoraText}>
-                      "Прозрение" - на 5 секунд показываются все карты. Таймер длительности игры на это время
-                      останавливается.
+                    <div className={styles.powers}>
+                      <div
+                        onClick={useAlohomora}
+                        className={cn(styles.alohomoraBack, {
+                          [styles.notActive]: usedAlohomora,
+                        })}
+                      >
+                        <img className={styles.alohomoraImg} src={alohomora} alt="alohomora" />
+                      </div>
+                      <div className={styles.alohomoraText}>"Алохомора" - открывает случайную пару карт</div>
                     </div>
-                    <div
-                      onClick={useAlohomora}
-                      className={cn(styles.alohomoraBack, {
-                        [styles.notActive]: usedAlohomora,
-                      })}
-                    >
-                      <img className={styles.alohomoraImg} src={alohomora} alt="alohomora" />
-                    </div>
-                    <div className={styles.alohomoraText}>"Алохомора" - открывает случайную пару карт</div>
                   </div>
                 </div>
               ) : null}

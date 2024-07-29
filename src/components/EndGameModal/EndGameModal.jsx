@@ -52,10 +52,10 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
     });
     achievements.filter(achiv => (achiv = hardPlayed));
 
-    // if (hardPlayed) {
-    //   achievements.unshift(1);
-    //   console.log(achievements, achievements.length, "Hi");
-    // }
+    if (hardPlayed) {
+      achievements.unshift(1);
+      console.log(achievements, achievements.length, "Hi");
+    }
     if (usedOnce === true) {
       achievements.push(2);
     }
