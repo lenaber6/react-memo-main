@@ -36,7 +36,6 @@ export function LeaderBoardPage() {
       return true;
     }
   }
-  console.log(hardPlayed());
   function superPlayed(list) {
     if (list.achievements.includes(2)) {
       return true;
