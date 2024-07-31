@@ -13,7 +13,7 @@
   }
   
   .pagename {
-    font-family: "Roboto";
+    font-family: "StratosSkyeng";
     font-size: 24px;
     font-weight: 400;
     line-height: 32px;
@@ -26,7 +26,7 @@
     border-radius: 12px;
     opacity: 0px;
     background: #7ac100;
-    font-family: "Roboto";
+    font-family: "StratosSkyeng";
     font-size: 24px;
     font-weight: 400;
     line-height: 32px;
@@ -61,7 +61,7 @@
   }
   
   .titleText {
-    font-family: "Poppins";
+    font-family: "StratosSkyeng";
     font-size: 24px;
     font-weight: 400;
     line-height: 32px;
@@ -90,7 +90,7 @@
   }
   
   .playerText {
-    font-family: "Poppins";
+    font-family: "StratosSkyeng";
     font-size: 24px;
     font-weight: 400;
     line-height: 32px;
@@ -119,7 +119,7 @@
     box-sizing: border-box;
     background-image: url(./images/backToText.png);
     border-radius: 12px;
-    font-family: "Inter";
+    font-family: "StratosSkyeng";
     font-size: 18px;
     font-weight: 400;
     line-height: 24px;

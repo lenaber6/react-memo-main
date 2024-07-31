@@ -103,8 +103,6 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
               type="text"
               name="name"
               onBlur={e => blurHandler(e)}
-              minlength="5"
-              maxlength="10"
               required
               value={sanitizeHtml(nameInputElement.name)}
               onChange={handleNameInputChange}
