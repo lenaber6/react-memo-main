@@ -103,8 +103,12 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setIsEpiphanyAvailable(true);
   }
   function resetGame() {
+    // isEasyMode(false);
     setUsedAlohomora(false);
     setUsedOnce(false);
+    setIsEpiphanyAvailable(true);
+    setMistakes(3);
+    setAreCardsOpened(false);
     setTimer({ seconds: 0, minutes: 0 });
     setStatus(STATUS_PREVIEW);
   }

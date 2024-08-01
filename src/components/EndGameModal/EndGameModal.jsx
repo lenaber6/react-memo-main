@@ -95,7 +95,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       {isLeader ? (
         <div className={styles.userblock}>
           {nameInputElementDirty && nameInputElementError && (
-            <div style={{ color: "red" }}>{nameInputElementError}</div>
+            <div style={{ color: "red", fontFamily: "StratosSkyeng" }}>{nameInputElementError}</div>
           )}
           <div className={styles.userblockSubmit}>
             <input
